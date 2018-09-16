@@ -1,3 +1,5 @@
+'use strict';
+
 var CLOUD_WIDTH = 500;
 var CLOUD_X = 30;
 var CLOUD_Y = -20;
@@ -80,9 +82,8 @@ var getMaxElement = function (arr) {
 };
 
 function hslColor(percent, start, end) {
-  var a = percent,
-    b = (end - start) * a,
-    c = b + start;
+  var b = (end - start) * percent;
+  var c = b + start;
 
   return 'hsl(' + c + ', 100%, 50%)';
 }
