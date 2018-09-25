@@ -7,35 +7,6 @@ var WIZARD_EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var NUMBER_OF_WIZARDS = 4;
 
-var setup = document.querySelector('.setup');
-setup.classList.remove('hidden');
-
-setup.querySelector('.setup-similar').classList.remove('hidden');
-var similarListElement = setup.querySelector('.setup-similar-list');
-
-var similarWizardTemplate = document
-  .querySelector('#similar-wizard-template')
-  .content
-  .querySelector('.setup-similar-item');
-
-var generateWizard = function () {
-  var wizard = similarWizardTemplate.cloneNode(true);
-
-  wizard.querySelector('.setup-similar-label').textContent = getValue(WIZARD_NAMES) + ' ' + getValue(WIZARD_SURNAMES);
-  wizard.querySelector('.wizard-coat').style.fill = getValue(WIZARD_COAT_COLOR);
-  wizard.querySelector('.wizard-eyes').style.fill = getValue(WIZARD_EYES_COLOR);
-
-  return wizard;
-};
-
-var fragment = document.createDocumentFragment();
-
-for (var i = 0; i < NUMBER_OF_WIZARDS; i++) {
-  fragment.appendChild(generateWizard());
-}
-
-similarListElement.appendChild(fragment);
-
 function getValue(array) {
   return deleteUsedArrayValue(array, getRandomArrayValue(array));
 }
@@ -49,3 +20,36 @@ function deleteUsedArrayValue(array, value) {
   array.splice(array.indexOf(value), 1);
   return value;
 }
+
+function main() {
+  var setup = document.querySelector('.setup');
+  var similarListElement = setup.querySelector('.setup-similar-list');
+
+  var similarWizardTemplate = document
+    .querySelector('#similar-wizard-template')
+    .content
+    .querySelector('.setup-similar-item');
+
+  var generateWizard = function () {
+    var wizard = similarWizardTemplate.cloneNode(true);
+
+    wizard.querySelector('.setup-similar-label').textContent = getValue(WIZARD_NAMES) + ' ' + getValue(WIZARD_SURNAMES);
+    wizard.querySelector('.wizard-coat').style.fill = getValue(WIZARD_COAT_COLOR);
+    wizard.querySelector('.wizard-eyes').style.fill = getValue(WIZARD_EYES_COLOR);
+
+    return wizard;
+  };
+
+  var fragment = document.createDocumentFragment();
+
+  for (var i = 0; i < NUMBER_OF_WIZARDS; i++) {
+    fragment.appendChild(generateWizard());
+  }
+
+  similarListElement.appendChild(fragment);
+
+  setup.classList.remove('hidden');
+  setup.querySelector('.setup-similar').classList.remove('hidden');
+}
+
+main();
