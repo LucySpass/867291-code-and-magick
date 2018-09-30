@@ -26,18 +26,8 @@ var dialogModule = (function () {
   };
 })();
 
-/**
- * Из-за этого модуля происходит странное поведение.
- * Работает только последний вызов setValues функции.
- * @type {{setValues}}
- */
 var colorChangeModule = (function () {
-  var _element;
-  var _tempArray;
-  var _constArray;
-  var _input;
-
-  function changeColor() {
+  function changeColor(_element, _tempArray, _constArray, _input) {
     _element.addEventListener('click', function () {
       if (_tempArray.length === 0) {
         _tempArray = _constArray.slice();
@@ -56,11 +46,7 @@ var colorChangeModule = (function () {
 
   return {
     setValues: function (constArray, selector, inputSelector) {
-      _element = document.querySelector(selector);
-      _input = document.querySelector(inputSelector);
-      _tempArray = constArray.slice();
-      _constArray = constArray;
-      changeColor();
+      changeColor(document.querySelector(selector), constArray.slice(), constArray, document.querySelector(inputSelector));
     }
   };
 })();
@@ -90,11 +76,6 @@ var initModule = (function () {
       var coatColors = WIZARD_COAT_COLOR.slice();
       var eyesColors = WIZARD_EYES_COLOR.slice();
 
-      /**
-       * Из этих трех вызовов цвет меняет только элемент последнего.
-       * Так должно происходить и можно ли сделать чтобы логика была
-       * правильная этим способом?
-       */
       colorChangeModule.setValues(WIZARD_COAT_COLOR, '.setup-wizard .wizard-coat', '.setup-player input[name=coat-color]');
       colorChangeModule.setValues(WIZARD_EYES_COLOR, '.setup-wizard .wizard-eyes', '.setup-player input[name=eyes-color]');
       colorChangeModule.setValues(FIREBALL_COLORS, '.setup-fireball-wrap', '.setup-fireball-wrap input[name=fireball-color]');
